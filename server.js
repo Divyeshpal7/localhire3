@@ -6,8 +6,8 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 require("dotenv").config(); // ✅ Load .env variables
 
-const Worker = require("./models/Worker");
-const User = require("./models/User");
+const Worker = require("./Worker");
+const User = require("./User");
 
 const app = express();
 
