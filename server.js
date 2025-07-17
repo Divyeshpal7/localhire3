@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
+require("dotenv").config(); // ✅ Load .env variables
 
 const Worker = require("./models/Worker");
 const User = require("./models/User");
@@ -11,13 +12,10 @@ const User = require("./models/User");
 const app = express();
 
 // ✅ MongoDB connection
-mongoose.connect(
-  "mongodb+srv://Divyeshpal7:Divyeshpal@cluster0.qiwhkcq.mongodb.net/loginSystem?retryWrites=true&w=majority&appName=Cluster0",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-).then(() => {
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
   console.log("✅ MongoDB Atlas connected successfully");
 }).catch((err) => {
   console.log("❌ MongoDB connection error:", err);
@@ -30,7 +28,7 @@ app.set("view engine", "ejs");
 
 // ✅ Session setup
 app.use(session({
-  secret: "localhire_secret_key",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
